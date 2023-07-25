@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produto;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
+use Symfony\Contracts\Service\Attribute\Required;
 
 class ProdutoController extends Controller
 {
@@ -17,10 +17,10 @@ class ProdutoController extends Controller
     public function index(): View
     {
         //
-        $produtos - Produto::latest()->paginenate(5);
+        $produtos = Produto::latest()->paginate(5);
 
         return view('produtos.index',compact('produtos'))
-        ->with('i',(request()->input('page',1)-1)*5);
+            ->with('i',(request()->input('page',1)-1)*5);
 
     }
 
@@ -28,7 +28,6 @@ class ProdutoController extends Controller
      * Show the form for creating a new resource.
      */
     public function create(): View
-
     {
         return view('produtos.create');
     }
@@ -49,6 +48,7 @@ class ProdutoController extends Controller
 
         return redirect()->route('produtos.index')
                         ->with('success','Produto criado com sucesso.');
+
     }
 
     /**
@@ -83,6 +83,7 @@ class ProdutoController extends Controller
 
         return redirect()->route('produtos.index')
                         ->with('success','Produto atualizado com sucesso.');
+
     }
 
     /**
@@ -93,6 +94,7 @@ class ProdutoController extends Controller
         $produto->delete();
 
         return redirect()->route('produtos.index')
-                        ->with('success','Produto excluido com sucesso.');
+                        ->with('success','Produto excluído com sucesso.');
+
     }
 }
